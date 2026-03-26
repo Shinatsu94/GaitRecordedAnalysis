@@ -7,7 +7,6 @@ working/ -- 工作根目錄
 │   ├── count_valid_data.py  -- 計數目前的有效總球數(站定準備)
 │   ├── import.py            -- 將資料原始檔匯入資料庫  
 │   ├── print_data_status.py -- 查詢指定成員資料進度  
-│   ├── README.md            -- 當前所在路徑  
 │   ├── setup_db.py          -- 建立空白資料庫(用於初始化)  
 │   └── show_data_table.py   -- 顯示當前所有動作缺陷數量  
 │  
