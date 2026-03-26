@@ -1,0 +1,1 @@
+SELECT video_name, camera_view, action, frame, time_sec, faults FROM point_table
