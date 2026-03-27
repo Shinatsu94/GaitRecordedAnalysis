@@ -1,11 +1,12 @@
 """
 PROJECT : Create DataBase
 AUTHOR  : PIN CHEN TSAI
-VERSION : v0.4
-UPDATE  : 2026-03-02
+VERSION : v0.5
+UPDATE  : 2026-03-27
 DETALES :
 - 建立 SQL 資料庫
 - 從外部載入 SQL 建立指令.txt
+- 創建資料庫時，會自動新增必要資料夾
 
 STATUS_CODE:
 
@@ -39,6 +40,13 @@ def readfile(file_path):
 #--- MAIN-----------------------------------------------------+
 def create_db(sql_statements, db_path):
     try:
+
+        # 自動新增必要目錄
+        db_dir = os.path.dirname(db_path)
+        if db_dir and not os.path.exists(db_dir):
+            os.makedirs(db_dir)
+            print(f"[CDB] 📂 已建立必要的目錄: {db_dir}")
+
         db_name = os.path.basename(db_path)
 
         # 連結資料庫 (若不存在會自動建立)
