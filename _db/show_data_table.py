@@ -11,11 +11,14 @@ import sqlite3
 
 # -- VARIABLE-----------------------------------+
 
+# 當前工作目錄
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+
 # 資料庫路徑
-CONN_PATH = 'lib/point.db'
+CONN_PATH = os.path.join(CURRENT_DIR, 'lib/point.db')
 
 # 匯出excel 路徑
-E_PATH = 'lib/失誤統計報表.xlsx'
+E_PATH = os.path.join(CURRENT_DIR, 'lib/失誤統計報表.xlsx')
 
 # -- FUNCTIONS----------------------------------+
 

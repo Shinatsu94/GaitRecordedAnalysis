@@ -11,8 +11,11 @@ import sqlite3
 
 # -- VARIABLE-----------------------------------+
 
+# 當前工作目錄
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+
 # 資料庫路徑
-CONN_PATH = 'lib/point.db'
+CONN_PATH = os.path.join(CURRENT_DIR, 'lib/point.db')
 SEARCH_ID = '09'
 
 # -- FUNCTIONS----------------------------------+

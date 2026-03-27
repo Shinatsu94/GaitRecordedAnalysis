@@ -24,7 +24,7 @@ def import_csv(file_path):
     """
     將 CSV 資料匯入資料庫
     資料庫格式要求:
-    id (自動生成), video_date, video_name, player_id, play_round, camera_view, action, frame, time_sec, faults
+    id (自動生成), video_date, video_name, player_id, play_round, camera_view, fps, version, action, frame, time_sec, faults
     """
 
     try:
@@ -61,15 +61,26 @@ def import_csv(file_path):
 
         parts = df['video_name'].str.split('_', expand=True)
 
-        df['play_type']  = parts[1] if len(parts) > 1 else "預設"
-        df['player_id']  = parts[2] if len(parts) > 2 else "-1"
-        df['play_round'] = parts[3] if len(parts) > 3 else "-1"
+        df['play_type']  = parts[1] if parts.shape[1] > 1 else "預設"
+        df['player_id']  = parts[2] if parts.shape[1] > 2 else "-1"
+        df['play_round'] = parts[3] if parts.shape[1] > 3 else "-1"
+
+        # 單獨處理幀數欄位
+        df['fps']        = parts[5] if parts.shape[1] > 5 else "-1"
+        df['fps'] = df['fps'].str.split('.', expand=True)[0]
+
+        # 單獨處理版本欄位
+        # 修正 如果欄位為 ".mov" 的例外情況，以及避免空字串情況
+        df['version'] = parts[6].fillna("1") if parts.shape[1] > 6 else "1"
+        df.loc[df['version'] == '.mov', 'version'] = "1"
+        df['version'] = df['version'].replace("", "1")
+        df['version'] = df['version'].str.split('.', expand=True)[0]
 
         # 將空值(NaN) 轉為空字串
         #df = df.fillna('')
 
         # 篩選指定欄位
-        db_columns = ['video_date', 'video_name', 'play_type', 'player_id', 'play_round', 'camera_view', 'action', 'frame', 'time_sec', 'faults']
+        db_columns = ['video_date', 'video_name', 'play_type', 'player_id', 'play_round', 'camera_view', 'fps', 'version', 'action', 'frame', 'time_sec', 'faults']
         df = df[db_columns]
 
         # 確保 lib 資料夾存在

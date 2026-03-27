@@ -11,8 +11,11 @@ import sqlite3
 
 # -- VARIABLE-----------------------------------+
 
+# 當前工作目錄
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+
 # 資料庫路徑
-CONN_PATH = 'lib/point.db'
+CONN_PATH = os.path.join(CURRENT_DIR, 'lib/point.db')
 SEARCH_ID = '09'
 
 # -- FUNCTIONS----------------------------------+
@@ -34,12 +37,12 @@ def print_data_list(id):
 
     # 取得資料 (使用參數化進行查詢)
     query = """
-    SELECT video_date, player_id, play_type, play_round, camera_view,
+    SELECT video_date, player_id, play_type, play_round, camera_view, version, 
         COUNT(*) AS d_count
     FROM point_table
     WHERE player_id = ?
-    GROUP BY video_date, play_type, player_id, play_round, camera_view
-    ORDER BY video_date, player_id, play_type, play_round, camera_view;
+    GROUP BY video_date, play_type, player_id, play_round, camera_view, version
+    ORDER BY video_date, player_id, play_type, play_round, camera_view, version;
     """
 
     # 執行查詢
@@ -65,7 +68,7 @@ def print_data_list(id):
             # 遍歷該組合中的所有鏡頭與數量
             for _, row in group.iterrows():
                 # 輸出格式：鏡頭:數量
-                print(f"{row['camera_view']}:{row['d_count']} | ", end="")
+                print(f"{row['camera_view']}_{row['version']}:{row['d_count']} | ", end="")
             print()
 
 # 從資料庫中查詢目前有效的資料數
@@ -95,12 +98,12 @@ def print_valid_data(id):
 
     # 取得資料 (使用參數化進行查詢)
     query  = f"""
-    SELECT video_date, play_type, player_id, play_round, camera_view, 
+    SELECT video_date, play_type, player_id, play_round, camera_view, version, 
     COUNT(*) AS count 
     FROM point_table 
     WHERE action = '站定準備' 
         AND player_id = ?
-    GROUP BY video_date, play_type, player_id, play_round, camera_view
+    GROUP BY video_date, play_type, player_id, play_round, camera_view, version
     ORDER BY video_date, player_id, play_round;
     """
 
@@ -124,7 +127,7 @@ def print_valid_data(id):
             # 遍歷該組合中的所有鏡頭與數量
             for _, row in group.iterrows():
                 # 輸出格式：鏡頭:數量
-                print(f"{row['camera_view']}:{row['count']} | ", end="")
+                print(f"{row['camera_view']}_{row['version']}:{row['count']} | ", end="")
             print()
 
     # 中斷資料庫
