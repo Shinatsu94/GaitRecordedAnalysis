@@ -8,6 +8,8 @@ CREATE TABLE point_table
   player_id TEXT, 
   play_round TEXT, 
   camera_view TEXT, 
+  fps INTEGER, 
+  version INTEGER, 
   action TEXT, 
   frame INTEGER, 
   time_sec REAL, 

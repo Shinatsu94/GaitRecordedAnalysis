@@ -29,3 +29,13 @@
   - 預設資料來源為 ``newest/*.csv``
 - show_data_table.py
   - 如果需要輸出Excel資料，大約 80 行左右，將註解取消即可。 (如報錯請自行補齊套件)
+
+## 開發日誌
+- v1.0: 基本功能上線並推上Github
+- v1.1: 追加fps 和 version 欄位資訊
+- v1.2: 重新修正v1.1資料判定
+  - create_db 已修改
+  - import.py 已修改
+  - print_data_status 未修改，需追加版本功能
+  - show_data_table 未修改，需追加版本功能
+  - count_valid_data 未修改，需追加版本功能
