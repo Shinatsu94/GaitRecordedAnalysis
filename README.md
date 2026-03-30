@@ -39,3 +39,7 @@
   - print_data_status 未修改，需追加版本功能
   - show_data_table 未修改，需追加版本功能
   - count_valid_data 未修改，需追加版本功能
+- v1.3:
+  - import.py 更動核心寫入邏輯以及將檔名替換成標準格式
+  - print_data_status 已修改，可以如期閱讀資料
+  - show_data_table 未更新 但勉強不影響核心功能
