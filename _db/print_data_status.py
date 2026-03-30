@@ -37,12 +37,12 @@ def print_data_list(id):
 
     # 取得資料 (使用參數化進行查詢)
     query = """
-    SELECT video_date, player_id, play_type, play_round, camera_view,
+    SELECT video_date, player_id, play_type, play_round, camera_view, version,
         COUNT(*) AS d_count
     FROM point_table
     WHERE player_id = ?
-    GROUP BY video_date, play_type, player_id, play_round, camera_view
-    ORDER BY video_date, player_id, play_type, play_round, camera_view;
+    GROUP BY video_date, play_type, player_id, play_round, camera_view, version
+    ORDER BY video_date, player_id, play_type, play_round, camera_view, version;
     """
 
     # 執行查詢
@@ -68,7 +68,8 @@ def print_data_list(id):
             # 遍歷該組合中的所有鏡頭與數量
             for _, row in group.iterrows():
                 # 輸出格式：鏡頭:數量
-                print(f"{row['camera_view']:<2}:{row['d_count']:<3} | ", end="")
+                str1 = f"{row['camera_view']}.{row['version']}"
+                print(f"{str1:<4}:{row['d_count']:<3} | ", end="")
             print()
 
 # 從資料庫中查詢目前有效的資料數
@@ -98,13 +99,13 @@ def print_valid_data(id):
 
     # 取得資料 (使用參數化進行查詢)
     query  = f"""
-    SELECT video_date, play_type, player_id, play_round, camera_view, 
+    SELECT video_date, play_type, player_id, play_round, camera_view, version, 
     COUNT(*) AS count 
     FROM point_table 
     WHERE action = '站定準備' 
         AND player_id = ?
-    GROUP BY video_date, play_type, player_id, play_round, camera_view
-    ORDER BY video_date, player_id, play_round;
+    GROUP BY video_date, play_type, player_id, play_round, camera_view, version
+    ORDER BY video_date, player_id, play_round, version;
     """
 
     # 執行查詢
@@ -127,7 +128,8 @@ def print_valid_data(id):
             # 遍歷該組合中的所有鏡頭與數量
             for _, row in group.iterrows():
                 # 輸出格式：鏡頭:數量
-                print(f"{row['camera_view']:<2}:{row['count']:<3} | ", end="")
+                str1 = f"{row['camera_view']}.{row['version']}"
+                print(f"{str1:<4}:{row['count']:<3} | ", end="")
             print()
 
     # 中斷資料庫
