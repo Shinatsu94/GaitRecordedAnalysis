@@ -90,9 +90,8 @@ def import_csv(file_path):
             # 移除附檔名干擾並轉為字串
             v_version = parts[6].str.split('.', expand=True)[0]
             v_version = v_version.replace("", "1").fillna("1")
-        else:
-            # 若無第 7 段，則根據「是否有前置路徑」決定 2 還是 1
-            v_version = is_extra_path.map({True: "2", False: "1"})
+        # 根據「是否有前置路徑」決定 2 還是 1
+        v_version = is_extra_path.map({True: "2", False: "1"})
 
         # 確保各部件為字串，以便合併成檔名
         s_date    = v_date.astype(str)
